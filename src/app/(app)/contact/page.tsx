@@ -14,11 +14,11 @@ export default function Page() {
         width={800}
       />
       <div className="text-start mb-10 mt-10 lg:max-w-md">
-        <Fade direction="up" triggerOnce delay={600} duration={800}>
+        <Fade direction="up" delay={600} duration={800}>
           <div className="text-on-surface font-bold text-3xl">Contact</div>
         </Fade>
 
-        <Fade direction="up" triggerOnce delay={300} duration={800}>
+        <Fade direction="up" delay={300} duration={800}>
           <div className="text-on-surface-variant text-sm mt-3 mb-10">
             We&apos;re here to help and answer any question you might have. We
             look forward to hearing from you.

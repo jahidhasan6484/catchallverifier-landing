@@ -43,12 +43,12 @@ export default function Home() {
       {/* Hero section */}
       <div className="mx-4 lg:flex lg:flex-row-reverse items-center mt-5">
         <div className="lg:hidden md:mb-10">
-          <Fade direction="up" triggerOnce>
+          <Fade direction="up">
             <h1 className="text-on-surface text-4xl md:text-5xl font-medium mb-3">
               Boost Email Delivery with Catch-all Verifier
             </h1>
           </Fade>
-          <Fade direction="up" delay={200} triggerOnce>
+          <Fade direction="up" delay={200}>
             <div className="text-on-surface text-xl  mb-4">
               We verify Risky, Catch-all (Accept-all) & Unknown Emails
             </div>
@@ -73,12 +73,12 @@ export default function Home() {
         </div>
         <div className="md:text-start md:max-w-xl lg:ms-20">
           <div className="hidden lg:block">
-            <Fade direction="up" triggerOnce>
+            <Fade direction="up">
               <h1 className="text-on-surface text-4xl md:text-5xl font-medium mb-3">
                 Boost Email Delivery with Catch-all Verifier
               </h1>
             </Fade>
-            <Fade direction="up" delay={200} triggerOnce>
+            <Fade direction="up" delay={200}>
               <div className="text-on-surface text-xl  mb-4">
                 We verify Risky, Catch-all (Accept-all) & Unknown Emails
               </div>
@@ -86,17 +86,17 @@ export default function Home() {
           </div>
           {/* Features */}
           <div className="text-on-surface text-start font-medium text-sm mb-10 mt-10 md:max-w-md">
-            <Fade direction="up" delay={400} triggerOnce>
+            <Fade direction="up" delay={400}>
               <CheckBoxItem>
                 Detect truly deliverable emails from 98% of catch-all emails.
               </CheckBoxItem>
             </Fade>
-            <Fade direction="up" delay={600} triggerOnce>
+            <Fade direction="up" delay={600}>
               <CheckBoxItem>
                 2X your revenue contacting these less-targeted prospects.
               </CheckBoxItem>
             </Fade>
-            <Fade direction="up" delay={800} triggerOnce>
+            <Fade direction="up" delay={800}>
               <CheckBoxItem>
                 Land in inbox and Say Goodbye to high bounce rates.
               </CheckBoxItem>
@@ -125,87 +125,110 @@ export default function Home() {
       </div>
 
       {/* Bypass Email section */}
-      <div className="mx-4  md:flex md:justify-center">
+      <div className="mx-4 md:flex md:justify-center">
         <div className="md:text-start md:max-w-md lg:max-w-full lg:flex lg:flex-row-reverse items-center lg:mt-32">
-          <div className="flex justify-center ">
+          <div className="flex justify-center animate-fadeInScale">
             <Email />
           </div>
+
           <div className="lg:max-w-md lg:mr-10">
-            <SectionHeader>Bypass catch-all emails</SectionHeader>
-            <SectionDescription>
-              Enhance your email discovery by 20-30% with our advanced catch-all
-              algorithm.
-            </SectionDescription>
-            <div className="mt-10 lg:pr-20">
-              <div className="text-start text-sm text-on-surface mb-1">
-                Before
-              </div>
-              <div className="bg-white flex justify-between items-center p-4 py-5 shadow-[0px_0px_30px_0px_rgba(103,62,229,.04)] rounded-xl mb-2">
-                <div className="text-on-surface-variant text-sm">
-                  info@catchallverifier.com
+            <Fade direction="up" delay={600} duration={800}>
+              <SectionHeader>Bypass catch-all emails</SectionHeader>
+            </Fade>
+            <Fade direction="up" delay={300} duration={800}>
+              <SectionDescription>
+                Enhance your email discovery by 20-30% with our advanced
+                catch-all algorithm.
+              </SectionDescription>
+            </Fade>
+            <Fade cascade damping={0.1}>
+              <div className="mt-10 lg:pr-20">
+                <div className="text-start text-sm text-on-surface mb-1">
+                  Before
                 </div>
-                <div className="text-error border border-error rounded-full px-3 text-sm bg-error bg-opacity-10">
-                  Risky
+                <div className="bg-white flex justify-between items-center p-4 py-5 shadow-[0px_0px_30px_0px_rgba(103,62,229,.04)] rounded-xl mb-2">
+                  <div className="text-on-surface-variant text-sm">
+                    info@catchallverifier.com
+                  </div>
+                  <div className="text-error border border-error rounded-full px-3 text-sm bg-error bg-opacity-10">
+                    Risky
+                  </div>
+                </div>
+                <div className="text-start text-sm text-on-surface mb-1">
+                  After
+                </div>
+                <div className="bg-white flex justify-between items-center p-4 py-5 shadow-[0px_0px_30px_0px_rgba(103,62,229,.04)] rounded-xl mb-2">
+                  <div className="text-on-surface-variant text-sm">
+                    info@catchallverifier.com
+                  </div>
+                  <div className="text-success border border-success rounded-full px-3 text-sm bg-success bg-opacity-10">
+                    Valid
+                  </div>
                 </div>
               </div>
-              <div className="text-start text-sm text-on-surface mb-1">
-                After
-              </div>
-              <div className="bg-white flex justify-between items-center p-4 py-5 shadow-[0px_0px_30px_0px_rgba(103,62,229,.04)] rounded-xl mb-2">
-                <div className="text-on-surface-variant text-sm">
-                  info@catchallverifier.com
-                </div>
-                <div className="text-success border border-success rounded-full px-3 text-sm  bg-success bg-opacity-10">
-                  Valid
-                </div>
-              </div>
-            </div>
+            </Fade>
           </div>
         </div>
       </div>
 
       {/* Verification section */}
-      <div className="mx-4  md:flex md:justify-center mt-32">
+      <div className="mx-4 md:flex md:justify-center mt-32">
         <div className="mt-20 md:max-w-md lg:max-w-full lg:flex lg:items-center lg:gap-x-16 lg:text-start">
           <div className="lg:max-w-md">
-            <SectionHeader>
-              One platform for all your email verification needs.
-            </SectionHeader>
-            <SectionDescription>
-              Skip the hassle of multiple tools and streamline your workflow
-              with Catch-all Verifier, the ultimate solution that effortlessly
-              manages all your email verification needs in one place.
-            </SectionDescription>
+            <Fade direction="up">
+              <SectionHeader>
+                One platform for all your email verification needs.
+              </SectionHeader>
+            </Fade>
+            <Fade direction="up" delay={200}>
+              <SectionDescription>
+                Skip the hassle of multiple tools and streamline your workflow
+                with Catch-all Verifier, the ultimate solution that effortlessly
+                manages all your email verification needs in one place.
+              </SectionDescription>
+            </Fade>
+
             <div className="text-on-surface text-start text-sm mb-6 mt-10 font-medium">
-              <CheckShildItem>
-                Effortlessly verify single email addresses in real-time.
-              </CheckShildItem>
-              <CheckShildItem>
-                Authenticate every address in your bulk email lists.
-              </CheckShildItem>
-              <CheckShildItem>
-                Seamlessly integrate our API for customized email verification
-                solutions.
-              </CheckShildItem>
+              <Fade direction="up" delay={400}>
+                <CheckShildItem>
+                  Effortlessly verify single email addresses in real-time.
+                </CheckShildItem>
+              </Fade>
+              <Fade direction="up" delay={600}>
+                <CheckShildItem>
+                  Authenticate every address in your bulk email lists.
+                </CheckShildItem>
+              </Fade>
+              <Fade direction="up" delay={800}>
+                <CheckShildItem>
+                  Seamlessly integrate our API for customized email verification
+                  solutions.
+                </CheckShildItem>
+              </Fade>
             </div>
           </div>
           <div className="lg:max-w-md">
-            <VerificationSectionCard
-              imgSrc={singleEmailVeirficationImage}
-              title="Single Email Verification"
-              description="Unlock the capability to effortlessly verify the authenticity of
-                any email address in real-time"
-            />
-            <VerificationSectionCard
-              imgSrc={bulkEmailVerificationImage}
-              title="Bulk Email Verification"
-              description="Upload your list for comprehensive email verification, ensuring every address is authenticated."
-            />
-            <VerificationSectionCard
-              imgSrc={apiIntegrationImage}
-              title="Api Integration"
-              description="Seamlessly integrate our API for email verification or opt for a tailored solution to suit your needs."
-            />
+            <Fade direction="down">
+              <VerificationSectionCard
+                imgSrc={singleEmailVeirficationImage}
+                title="Single Email Verification"
+                description="Unlock the capability to effortlessly verify the authenticity of any email address in real-time."
+              />
+            </Fade>
+            <Fade direction="down" delay={100}>
+              <VerificationSectionCard
+                imgSrc={bulkEmailVerificationImage}
+                title="Bulk Email Verification"
+                description="Upload your list for comprehensive email verification, ensuring every address is authenticated."
+              />
+            </Fade>
+            <Fade direction="down" delay={200}>
+              <VerificationSectionCard
+                imgSrc={apiIntegrationImage}
+                title="API Integration"
+                description="Seamlessly integrate our API for email verification or opt for a tailored solution to suit your needs."
+              />
+            </Fade>
           </div>
         </div>
       </div>
@@ -213,118 +236,145 @@ export default function Home() {
       {/* How its works section */}
       <div className="mx-4 md:flex md:justify-center">
         <div className="mt-32 md:max-w-md xl:max-w-full">
-          <SectionHeader>How it works</SectionHeader>
-          <SectionDescription>
-            We validate emails for accuracy and cleanliness, ensuring your list
-            is reliable for your campaigns.
-          </SectionDescription>
+          <Fade direction="up">
+            <SectionHeader>How it works</SectionHeader>
+          </Fade>
+          <Fade direction="up" delay={200}>
+            <SectionDescription>
+              We validate emails for accuracy and cleanliness, ensuring your
+              list is reliable for your campaigns.
+            </SectionDescription>
+          </Fade>
 
           <div className="xl:flex xl:justify-stretch xl:max-w-screen-xl xl:relative">
-            <div className="absolute hidden xl:flex top-14 left-0 justify-between max-w-screen-xl w-full px-72">
-              <Image src={desktopStepPath} width={250} alt="path" />
-              <Image src={desktopStepPath} width={250} alt="path" />
-            </div>
+            <Fade direction="left" cascade>
+              <div className="absolute hidden xl:flex top-14 left-0 justify-between max-w-screen-xl w-full px-72">
+                <Fade direction="right">
+                  <Image src={desktopStepPath} width={250} alt="path" />
+                </Fade>
+                <Fade direction="left">
+                  <Image src={desktopStepPath} width={250} alt="path" />
+                </Fade>
+              </div>
+            </Fade>
+
             <div className="mt-10 mx-8 relative flex-1">
-              <Image
-                src={tabStepPath}
-                height={235}
-                alt="path"
-                className="hidden md:block xl:hidden absolute -right-20 top-20"
-              />
-              <div className="flex justify-center">
-                <Image src={emailListImage} alt="hero" />
-              </div>
-              <div className="text-center text-[#3772FF] font-medium mt-3">
-                Step 1
-              </div>
-              <div className="text-primary text-xl font-bold mb-1 mt-3">
-                Submit your catch-all or risky email list
-              </div>
-              <div className="text-on-surface-variant text-sm mt-2">
-                Our email list validation service includes a brief waiting
-                period before returning your lead list.
-              </div>
+              <Fade direction="left">
+                <Image
+                  src={tabStepPath}
+                  height={235}
+                  alt="path"
+                  className="hidden md:block xl:hidden absolute -right-20 top-20"
+                />
+              </Fade>
+              <Fade direction="up">
+                <div className="flex justify-center">
+                  <Image src={emailListImage} alt="hero" />
+                </div>
+                <div className="text-center text-[#3772FF] font-medium mt-3">
+                  Step 1
+                </div>
+                <div className="text-primary text-xl font-bold mb-1 mt-3">
+                  Submit your catch-all or risky email list
+                </div>
+                <div className="text-on-surface-variant text-sm mt-2">
+                  Our email list validation service includes a brief waiting
+                  period before returning your lead list.
+                </div>
+              </Fade>
             </div>
 
-            <div className="mt-10  mx-8 relative flex-1">
-              <Image
-                src={tabStepPathLeft}
-                height={255}
-                alt="path"
-                className="hidden md:block xl:hidden absolute -left-20 top-20"
-              />
-              <div className="flex justify-center">
-                <Image src={leadListImage} alt="hero" />
-              </div>
-              <div className="text-center text-primary font-medium mt-3">
-                Step 2
-              </div>
-              <div className="text-primary text-xl font-bold mb-1 mt-3">
-                We scrub your catch-all lead list
-              </div>
-              <div className="text-on-surface-variant text-sm mt-2">
-                We analyze all of your emails and detect which one is valid and
-                which one is not using our powerful algorithm that can identify
-                valid emails even from catch-all, risky and unknown emails in
-                real time.
-              </div>
+            <div className="mt-10 mx-8 relative flex-1">
+              <Fade direction="right">
+                <Image
+                  src={tabStepPathLeft}
+                  height={255}
+                  alt="path"
+                  className="hidden md:block xl:hidden absolute -left-20 top-20"
+                />
+              </Fade>
+              <Fade direction="up" delay={200}>
+                <div className="flex justify-center">
+                  <Image src={leadListImage} alt="hero" />
+                </div>
+                <div className="text-center text-primary font-medium mt-3">
+                  Step 2
+                </div>
+                <div className="text-primary text-xl font-bold mb-1 mt-3">
+                  We scrub your catch-all lead list
+                </div>
+                <div className="text-on-surface-variant text-sm mt-2">
+                  We analyze all of your emails and detect which one is valid
+                  and which one is not using our powerful algorithm that can
+                  identify valid emails even from catch-all, risky and unknown
+                  emails in real time.
+                </div>
+              </Fade>
             </div>
 
-            <div className="mt-10  mx-8 flex-1">
-              <div className="flex justify-center">
-                <Image src={emailBackupImage} alt="hero" />
-              </div>
-              <div className="text-center text-success font-medium mt-3">
-                Step 3
-              </div>
-              <div className="text-primary text-xl font-bold mb-1 mt-3">
-                Receive back your lead list
-              </div>
-              <div className="text-on-surface-variant text-sm mt-2">
-                After assembling your lead list, simply upload the file onto our
-                platform to initiate the process using the sole tool capable of
-                validating high-risk emails.
-              </div>
+            <div className="mt-10 mx-8 flex-1">
+              <Fade direction="up" delay={400}>
+                <div className="flex justify-center">
+                  <Image src={emailBackupImage} alt="hero" />
+                </div>
+                <div className="text-center text-success font-medium mt-3">
+                  Step 3
+                </div>
+                <div className="text-primary text-xl font-bold mb-1 mt-3">
+                  Receive back your lead list
+                </div>
+                <div className="text-on-surface-variant text-sm mt-2">
+                  After assembling your lead list, simply upload the file onto
+                  our platform to initiate the process using the sole tool
+                  capable of validating high-risk emails.
+                </div>
+              </Fade>
             </div>
           </div>
         </div>
       </div>
+
       <div className="mx-4 mt-32 lg:mt-52"></div>
       <Suspense>
         <HomePricing />
       </Suspense>
+
       {/* Client message section */}
       <div className="mx-4 md:flex md:justify-center mb-32">
         <div className="mt-32 md:max-w-md lg:max-w-screen-xl lg:px-24">
-          <SectionHeader>Valuable client message</SectionHeader>
-          <SectionDescription>
-            Testimonials from valued clients we have worked with
-          </SectionDescription>
+          <Fade direction="up">
+            <SectionHeader>Valuable client message</SectionHeader>
+          </Fade>
+          <Fade direction="up" delay={200}>
+            <SectionDescription>
+              Testimonials from valued clients we have worked with
+            </SectionDescription>
+          </Fade>
           <div className="lg:grid lg:grid-cols-3 lg:gap-x-10">
-            <ClientMessageItem
-              image={emilyJohnsonImage}
-              name="Mansoor Zazi"
-              designation="Account Manager"
-              message="Catch-all Verifier is an easy to use and highly accurate catch-all email verification tool. It's a very quick, reliable and cost effective email catch-all verification tool!!"
-            />
-            <ClientMessageItem
-              image={michaelLeeImage}
-              name="Michael Lee"
-              designation="Email Marketing Specialist"
-              message="Our bounce rates dropped dramatically after using this service. It's efficient, reliable, and has protected our sender reputation. Highly recommend it!"
-            />
-            <ClientMessageItem
-              image={davidKimImage}
-              name="David Kim"
-              designation="Marketing Manager"
-              message="Using this catch-all email verification service significantly reduced our bounce rates and improved email deliverability. It's efficient, user-friendly, and indispensable for any email marketing strategy. Highly recommended!"
-            />
-            {/* <ClientMessageItem
-              image={lauraNguyenImage}
-              name="Laura Nguyen"
-              designation="Email Marketing Specialist"
-              message="This service transformed our email outreach by filtering out invalid addresses. It’s fast, accurate, and enhanced our campaign results. A must-have for effective email marketing."
-            /> */}
+            <Fade direction="right">
+              <ClientMessageItem
+                image={emilyJohnsonImage}
+                name="Mansoor Zazi"
+                designation="Account Manager"
+                message="Catch-all Verifier is an easy to use and highly accurate catch-all email verification tool. It's a very quick, reliable and cost effective email catch-all verification tool!!"
+              />
+            </Fade>
+            <Fade direction="right" delay={50}>
+              <ClientMessageItem
+                image={michaelLeeImage}
+                name="Michael Lee"
+                designation="Email Marketing Specialist"
+                message="Our bounce rates dropped dramatically after using this service. It's efficient, reliable, and has protected our sender reputation. Highly recommend it!"
+              />
+            </Fade>
+            <Fade direction="right" delay={100}>
+              <ClientMessageItem
+                image={davidKimImage}
+                name="David Kim"
+                designation="Marketing Manager"
+                message="Using this catch-all email verification service significantly reduced our bounce rates and improved email deliverability. It's efficient, user-friendly, and indispensable for any email marketing strategy. Highly recommended!"
+              />
+            </Fade>
           </div>
         </div>
       </div>
@@ -377,7 +427,7 @@ function VerificationSectionCard({
   description: string;
 }) {
   return (
-    <div className="bg-white text-start shadow-[0px_0px_30px_0px_rgba(103,62,229,.08)] p-5 rounded-xl my-4">
+    <div className="bg-white text-start shadow-[0px_0px_30px_0px_rgba(103,62,229,.08)] p-5 rounded-xl my-4 transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-[0px_0px_40px_0px_rgba(103,62,229,.15)]">
       <Image src={imgSrc} alt="icon" />
       <SectionSubHeader>{title}</SectionSubHeader>
       <SectionDescription>{description}</SectionDescription>

@@ -24,7 +24,7 @@ export function ContactForm() {
 
   return (
     <form action={dispatch} ref={formRef}>
-      <Fade cascade damping={0.1} triggerOnce>
+      <Fade cascade damping={0.1}>
         <InputField
           name="name"
           type="text"
@@ -58,7 +58,7 @@ export function ContactForm() {
         />
         <SubmitButton label="Send message" />
       </Fade>
-      <Slide direction="up" triggerOnce>
+      <Slide direction="up">
         {state.errorMessage && <ErrorMessage error={state.errorMessage} />}
         {state.successMessage && (
           <SuccessMessage error={state.successMessage} />
