@@ -1,0 +1,381 @@
+openapi: 3.0.1
+info:
+  title: API for Catch-all Verifier
+  version: 1.0.0
+  description: The Email Verification API allows developers validate the authenticity and deliverability of email addresses in both single and bulk modes. This API ensures your email lists are clean, reducing bounce rates and improving overall email campaign performance.
+
+servers: [{ url: https://app.catchallverifier.com/ }]
+security: [{ api_key_auth: [] }]
+components:
+  securitySchemes:
+    api_key_auth:
+      description: |
+        Submit authentication details by Header method: 
+         1. Get API Key from [API Setting](https://app.catchallverifier.com/settings/api). 
+         2. Set API Key to request header `Authorization`.
+      type: apiKey
+      name: Authorization
+      in: header
+  responses:
+    parameters-400:
+      description: Invalid parameters
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          examples:
+            Invalid JSON:
+              value:
+                message: Invalid parameter.
+
+    JSON-400:
+      description: Invalid JSON input
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          examples:
+            Invalid JSON:
+              value:
+                message: Invalid JSON input
+
+    401:
+      description: Authorization information is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          examples:
+            Authorization missing:
+              value:
+                message: Authorization information is missing.
+            Authorization invalid:
+              value:
+                message: Authorization information is invalid.
+    403:
+      description: Insufficient credits
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          examples:
+            Insufficient credits:
+              value:
+                message: Insufficient credits.
+    500:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          examples:
+            Server Error:
+              value:
+                message: Internal Server Error.
+paths:
+  /api/v1/verify/single:
+    post:
+      summary: Verify a single email
+      description: |
+        This endpoint allows you to run a single email verification.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: The email that needs to get verified.
+              required:
+                - email
+            example:
+              email: info@catchallverifier.com
+      responses:
+        # 200:
+        #   description: Verification Finished
+        #   content:
+        #     application/json:
+        #       schema:
+        #         type: object
+        #         properties:
+        #           message:
+        #             type: string
+        #           id:
+        #             type: string
+        #             description: Unique ID for this single verification task. You can use this ID to get the verification result.
+        #           credits_used:
+        #             type: integer
+        #             description: Credits consumed for this task.
+        #           email:
+        #             type: string
+        #             description: The email address submitted for verification.
+        #           result:
+        #             type: string
+        #             description: |
+        #               Enum: `valid` `invalid`<br />
+        #               The state (verification result) for the email.
+
+        #       examples:
+        #         Single Verification Created:
+        #           value:
+        #             message: "Success"
+        #             id: clvxxk6ge00092p21emwuec6k
+        #             credits_used: 1
+        #             email: info@catchallverifier.com
+        #             result: valid
+        201:
+          description: Indicates the request is successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  id:
+                    type: string
+                    description: Unique ID for this single verification task. You can use this ID to get the verification result.
+                  credits_used:
+                    type: integer
+                    description: Credits consumed for this task.
+              examples:
+                Single Verification Created:
+                  value:
+                    message: "Success"
+                    id: clvxxk6ge00092p21emwuec6k
+                    credits_used: 1
+
+        400:
+          $ref: "#/components/responses/JSON-400"
+        401:
+          $ref: "#/components/responses/401"
+        403:
+          $ref: "#/components/responses/403"
+        500:
+          $ref: "#/components/responses/500"
+
+    get:
+      summary: Get a single verification
+      description: |
+        This endpoint allows you to retrieve a single verification.
+        ***
+        The `result` will tell you if the email is either `valid` or `invalid`.
+      parameters:
+        - name: id
+          description: The unique ID for a single email verification task.
+          in: query
+          required: true
+          schema:
+            type: string
+          example:
+            id: clvxxk6ge00092p21emwuec6k
+
+      responses:
+        200:
+          description: Verification Finished
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    description: The email address submitted for verification.
+                  result:
+                    type: string
+                    description: |
+                      Enum: `valid` `invalid`<br />
+                      The state (verification result) for the email.
+
+              examples:
+                Verification Finished:
+                  value:
+                    email: info@catchallverifier.com
+                    result: valid
+        202:
+          description: Verification Ongoing
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Verification status for this task.
+
+              examples:
+                Search Ongoing:
+                  value:
+                    message: Verification Ongoing.
+
+        400:
+          $ref: "#/components/responses/parameters-400"
+        401:
+          $ref: "#/components/responses/401"
+        500:
+          $ref: "#/components/responses/500"
+
+  /api/v1/verify/bulk:
+    post:
+      summary: Verify multiple emails
+      description: |
+        This endpoint allows you to run multiple verifications in parallel.
+        ***
+        It can go up to **5000** verifications per batch.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                emails:
+                  type: array
+                  maxItems: 5000
+                  minItems: 1
+                  items:
+                    type: string
+                  description: A list of emails for verification.
+                name:
+                  type: string
+                  description: The name for the task. If not provided, a task name will be automatically generated.
+              required:
+                - emails
+            example:
+              emails: [info@catchallverifier.com, hello@catchallverifier.com]
+      responses:
+        201:
+          description: Indicates the request is successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  id:
+                    type: string
+                    description: Unique ID for this bulk verification task. You can use this ID to get the verification result.
+                  credits_used:
+                    type: integer
+                    description: Credits consumed for this task.
+              examples:
+                Single Verification Created:
+                  value:
+                    message: "Success"
+                    id: clvxxk6ge00092p21emwuec6k
+                    credits_used: 2
+        400:
+          $ref: "#/components/responses/JSON-400"
+        401:
+          $ref: "#/components/responses/401"
+        403:
+          $ref: "#/components/responses/403"
+        500:
+          $ref: "#/components/responses/500"
+
+    get:
+      summary: Get multiple verifications
+      description: |
+        This endpoint allows you to retrieve the results of a bulk verification
+        ***
+        The `result` will tell you if the email is either `valid` or `invalid`.
+      parameters:
+        - name: id
+          description: The unique ID for a bulk verification task.
+          in: query
+          required: true
+          schema:
+            type: string
+          example:
+            id: clvxxk6ge00092p21emwuec6k
+
+      responses:
+        200:
+          description: Verification Finished
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    description: Detailed verification results for each email.
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        email:
+                          description: The email address submitted for verification.
+                          type: string
+                        result:
+                          description: |
+                            Enum: `valid` `invalid`<br />
+                            The state (verification result) for the email.
+                          type: string
+                      required:
+                        - email
+                        - result
+                required:
+                  - items
+
+              examples:
+                Verification Finished:
+                  value:
+                    items:
+                      [
+                        { email: info@catchallverifier.com, result: valid },
+                        { email: hello@catchallverifier.com, result: invalid },
+                      ]
+
+        202:
+          description: Verification Ongoing
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Verification status for this task.
+                  stats:
+                    type: object
+                    properties:
+                      requested:
+                        type: integer
+                      finished:
+                        type: integer
+                    required:
+                      - requested
+                      - finished
+                required:
+                  - stats
+
+              examples:
+                Search Ongoing:
+                  value:
+                    message: Verification Ongoing.
+                    stats:
+                      requested: 2
+                      finished: 1
+
+        400:
+          $ref: "#/components/responses/parameters-400"
+        401:
+          $ref: "#/components/responses/401"
+        500:
+          $ref: "#/components/responses/500"

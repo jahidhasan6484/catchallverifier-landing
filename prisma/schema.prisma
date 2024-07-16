@@ -1,0 +1,369 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model AdminUser {
+  id         String          @id @default(cuid())
+  email      String          @unique
+  firstName  String
+  lastName   String
+  password   String
+  permission AdminPermission @default(DEFAULT)
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+}
+
+enum AdminPermission {
+  DEFAULT
+}
+
+model User {
+  id                 String               @id @default(cuid())
+  email              String               @unique
+  firstName          String
+  lastName           String
+  password           String
+  apiKey             String?              @unique
+  verified           Boolean              @default(false)
+  credit             Int                  @default(0)
+  sync               Boolean              @default(false)
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  VerificationToken  VerificationToken[]
+  BulkList           BulkEmailList[]
+  SingleEmailList    SingleEmailList[]
+  CheckoutSession    CheckoutSession[]
+  PaymentIntent      PaymentIntent[]
+  CreditChange       CreditChange[]
+  ResetPasswordToken ResetPasswordToken[]
+  WorkFlow           WorkFlow?
+}
+
+model PricingPlan {
+  id        String @id @default(cuid())
+  rangeFrom Int
+  rangeTo   Int
+  credit    Int
+  price     Int
+}
+
+model CheckoutSession {
+  id     String @id
+  credit Int
+  price  Int
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  PaymentIntent PaymentIntent?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model PaymentIntent {
+  paymentIntentId String @id
+  customerName    String
+  customerEmail   String
+  credit          Int
+  price           Int
+  paymentStatus   String
+
+  checkoutSession   CheckoutSession @relation(fields: [checkoutSessionId], references: [id])
+  checkoutSessionId String          @unique
+
+  creditChange   CreditChange? @relation(fields: [creditChangeId], references: [id])
+  creditChangeId String?       @unique
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CreditChange {
+  id      String           @id @default(cuid())
+  change  Int
+  type    CreditChangeType
+  remarks String?
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  PaymentIntent   PaymentIntent?
+  BulkEmailList   BulkEmailList?
+  SingleEmailList SingleEmailList?
+}
+
+enum CreditChangeType {
+  ORDER
+  SINGLEVERIFICATION
+  BULKVERIFICATION
+  ADMIN
+}
+
+model VerificationToken {
+  id         String    @id @default(cuid())
+  token      String    @unique
+  verifiedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+}
+
+model ResetPasswordToken {
+  id         String    @id @default(cuid())
+  token      String    @unique
+  verifiedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+}
+
+model SingleEmailList {
+  id    String @id @default(cuid())
+  email String
+
+  icypeasApiId   String? @unique
+  bouncebanApiId String? @unique
+  enrowApiId     String? @unique
+
+  reoonStatus           String?
+  debounceStatus        String?
+  millionverifierStatus String?
+  icypeasStatus         String?
+  bouncebanStatus       String?
+  trueinboxStatus       String?
+  enrowStatus           String?
+
+  status String?
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  workFlow String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  creditChange   CreditChange? @relation(fields: [creditChangeId], references: [id])
+  creditChangeId String?       @unique
+}
+
+model BulkEmailList {
+  id         String @id @default(cuid())
+  name       String
+  totalRow   Int
+  total      Int
+  valid      Int    @default(0)
+  invalid    Int    @default(0)
+  inProgress Int
+
+  emails BulkEmailListItem[]
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  deleted Boolean @default(false)
+
+  IcypeasApiRequest         IcypeasApiRequest[]
+  BouncebanApiRequest       BouncebanApiRequest[]
+  TrueinboxApiRequest       TrueinboxApiRequest[]
+  EnrowApiRequest           EnrowApiRequest[]
+  ReoonApiRequest           ReoonApiRequest[]
+  MillionverifierApiRequest MillionverifierApiRequest[]
+  DebounceApiRequest        DebounceApiRequest[]
+
+  workFlow                  String?
+  debounceRequestInProgress Boolean?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  creditChange   CreditChange? @relation(fields: [creditChangeId], references: [id])
+  creditChangeId String?       @unique
+}
+
+model BulkEmailListItem {
+  id      String  @id @default(cuid())
+  email   String
+  isEmail Boolean
+  order   Int
+
+  icypeasApiRequestId         String?
+  trueinboxApiRequestId       String?
+  enrowApiRequestId           String?
+  bouncebanApiRequestId       String?
+  reoonApiRequestId           String?
+  millionverifierApiRequestId String?
+  debounceApiRequestId        String?
+
+  reoonStatus           String?
+  millionverifierStatus String?
+  debounceStatus        String?
+  icypeasStatus         String?
+  trueinboxStatus       String?
+  enrowStatus           String?
+  bouncebanStatus       String?
+
+  isFreeEmail Boolean?
+  status      String?
+
+  bulkEmailList   BulkEmailList @relation(fields: [bulkEmailListId], references: [id])
+  bulkEmailListId String
+
+  createdAt                 DateTime                   @default(now())
+  updatedAt                 DateTime                   @updatedAt
+  IcypeasApiRequest         IcypeasApiRequest?         @relation(fields: [icypeasApiRequestId], references: [requestId])
+  BouncebanApiRequest       BouncebanApiRequest?       @relation(fields: [bouncebanApiRequestId], references: [requestId])
+  TrueinboxApiRequest       TrueinboxApiRequest?       @relation(fields: [trueinboxApiRequestId], references: [requestId])
+  EnrowApiRequest           EnrowApiRequest?           @relation(fields: [enrowApiRequestId], references: [requestId])
+  ReoonApiRequest           ReoonApiRequest?           @relation(fields: [reoonApiRequestId], references: [requestId])
+  MillionverifierApiRequest MillionverifierApiRequest? @relation(fields: [millionverifierApiRequestId], references: [requestId])
+  DebounceApiRequest        DebounceApiRequest?        @relation(fields: [debounceApiRequestId], references: [requestId])
+}
+
+model ReoonApiRequest {
+  requestId String @id
+
+  inProgress Boolean
+  total      Int
+  done       Int
+
+  checkedAt DateTime?
+
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  BulkEmailListItem BulkEmailListItem[]
+  BulkEmailList     BulkEmailList       @relation(fields: [bulkEmailListId], references: [id])
+  bulkEmailListId   String
+}
+
+model MillionverifierApiRequest {
+  requestId String @id
+
+  inProgress Boolean
+  total      Int
+  done       Int
+
+  checkedAt DateTime?
+
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  BulkEmailListItem BulkEmailListItem[]
+  BulkEmailList     BulkEmailList       @relation(fields: [bulkEmailListId], references: [id])
+  bulkEmailListId   String
+}
+
+model DebounceApiRequest {
+  requestId String @id
+
+  inProgress Boolean
+  total      Int
+  done       Int
+
+  checkedAt DateTime?
+
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  BulkEmailListItem BulkEmailListItem[]
+  BulkEmailList     BulkEmailList       @relation(fields: [bulkEmailListId], references: [id])
+  bulkEmailListId   String
+}
+
+model IcypeasApiRequest {
+  requestId String @id
+
+  inProgress Boolean
+  total      Int
+  done       Int
+
+  checkedAt DateTime?
+
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  BulkEmailListItem BulkEmailListItem[]
+  BulkEmailList     BulkEmailList       @relation(fields: [bulkEmailListId], references: [id])
+  bulkEmailListId   String
+}
+
+model BouncebanApiRequest {
+  requestId String @id
+
+  inProgress Boolean
+  total      Int
+  done       Int
+
+  checkedAt DateTime?
+
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  BulkEmailListItem BulkEmailListItem[]
+  BulkEmailList     BulkEmailList       @relation(fields: [bulkEmailListId], references: [id])
+  bulkEmailListId   String
+}
+
+model TrueinboxApiRequest {
+  requestId String @id
+
+  inProgress Boolean
+  total      Int
+  done       Int
+
+  checkedAt DateTime?
+
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  BulkEmailListItem BulkEmailListItem[]
+  BulkEmailList     BulkEmailList       @relation(fields: [bulkEmailListId], references: [id])
+  bulkEmailListId   String
+}
+
+model EnrowApiRequest {
+  requestId String @id
+
+  inProgress Boolean
+  total      Int
+  done       Int
+
+  checkedAt DateTime?
+
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  BulkEmailListItem BulkEmailListItem[]
+  BulkEmailList     BulkEmailList       @relation(fields: [bulkEmailListId], references: [id])
+  bulkEmailListId   String
+}
+
+model WorkFlow {
+  id String @id @default(cuid())
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
+
+  workFlow String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ContactUs {
+  id        String   @id @default(cuid())
+  userId    String?
+  name      String
+  email     String
+  subject   String
+  message   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
