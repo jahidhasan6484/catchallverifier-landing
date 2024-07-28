@@ -39,7 +39,7 @@ import { Fade } from "react-awesome-reveal";
 
 export default function Home() {
   return (
-    <main>
+    <div>
       {/* Hero section */}
       <div className="mx-4 lg:flex lg:flex-row-reverse items-center mt-5">
         <div className="lg:hidden md:mb-10">
@@ -378,7 +378,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
 
